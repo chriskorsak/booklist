@@ -57,6 +57,52 @@ UI.prototype.deleteBook = function(target) {
   }
 }
 
+//local storage constructor. only created for using its prototype methods
+function Store() {
+
+}
+
+//Store prototype methods
+Store.prototype.getBooks = function() {
+  let books;
+  if (!localStorage.getItem('books')) {
+    books = [];
+  } else {
+    books = JSON.parse(localStorage.getItem('books'));
+  }
+  return books;
+}
+
+Store.prototype.displayBooks = function() {
+  const books = Store.prototype.getBooks();
+  books.forEach(function(book) {
+    const ui = new UI();
+    ui.addBookToList(book);
+  })
+}
+
+Store.prototype.addBook = function(book) {
+  const books = Store.prototype.getBooks();
+  books.push(book);
+  localStorage.setItem('books', JSON.stringify(books));
+}
+
+Store.prototype.removeBook = function(isbn) {
+  const books = Store.prototype.getBooks();
+  books.forEach(function(book, index) {
+    if (book.isbn === isbn) {
+      books.splice(index, 1);
+    }
+  })
+  localStorage.setItem('books', JSON.stringify(books));
+}
+
+//dom content loaded runs displayBooks() object method to populate list on page load
+document.addEventListener('DOMContentLoaded', function() {
+  const store = new Store();
+  store.displayBooks();
+});
+
 //submit form
 document.getElementById('book-form').addEventListener('submit', function(e) {
   const title = document.getElementById('title').value,
@@ -75,6 +121,12 @@ document.getElementById('book-form').addEventListener('submit', function(e) {
   } else {
     //add book to table list
     ui.addBookToList(book);
+
+    //add book to local storage
+    //instantiate new Store object to use its object methods
+    const store = new Store();
+    store.addBook(book);
+
     //show success alert
     ui.showAlert('Your book has been added!', 'success');
     // clear out form inputs
@@ -88,6 +140,10 @@ document.getElementById('book-list').addEventListener('click', function(e) {
     //instantiate new ui object
     const ui = new UI();
     ui.deleteBook(e.target);
+    //remove from local storage
+    //target the isbn for a unique id
+    const store = new Store();
+    store.removeBook(e.target.parentElement.previousElementSibling.textContent);
     //show delete alert
     ui.showAlert('Book deleted!', 'success');
     //prevent default link behavior (target)

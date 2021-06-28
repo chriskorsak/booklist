@@ -23,7 +23,7 @@ Additionally, this application uses a CSS boilerplate framework called [Skeleton
 
 ## Setup/Installation Requirements
 
-None. This is a web-based application hosted on Github pages. Check out the app [here!](https://chriskorsak.github.io/book-list/)
+None. This is a web-based application hosted on Github pages. Check out the app [here!](https://chriskorsak.github.io/booklist/)
 
 ## Technologies Used
 

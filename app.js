@@ -65,7 +65,7 @@ document.getElementById('book-form').addEventListener('submit', function(e) {
   
   //create new book object
   const book = new Book(title, author, isbn);
-  //create new ui object so you can use its prototype methods
+  ////instantiate new ui object to use its prototype methods
   const ui = new UI();
 
   //validate form input values
@@ -80,12 +80,12 @@ document.getElementById('book-form').addEventListener('submit', function(e) {
     // clear out form inputs
     ui.clearForm();
   }
-
   e.preventDefault();
 });
 
 //delete book from table list
 document.getElementById('book-list').addEventListener('click', function(e) {
+    //instantiate new ui object
     const ui = new UI();
     ui.deleteBook(e.target);
     //show delete alert
